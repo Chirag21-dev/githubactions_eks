@@ -22,7 +22,7 @@ on:
   #IMAGE_NAME: 
 
 jobs:
-  Dockerbuild:
+  Dockerbuild_andpush:
 
     runs-on: ubuntu-latest
     permissions:
@@ -50,6 +50,13 @@ jobs:
           context: .
           push: false
           tags: chiragks1/gha-pyapp:${{env.SHORT_SHA}}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: chiragks1/gha-pyapp:${{ env.SHORT_SHA }}
 
       - name: Trivy Image Scan
         uses: aquasecurity/trivy-action@0.24.0
